@@ -4,12 +4,14 @@ plugins {
     `java-library`
     id("idea")
     kotlin("jvm") version "1.9.10"
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
 }
 
 allprojects {
     apply(plugin = "java-library")
     apply(plugin = "idea")
     apply(plugin = "kotlin")
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
     group = "dev.appkr"
     version = "0.0.1-SNAPSHOT"
@@ -28,6 +30,17 @@ allprojects {
 
     repositories {
         mavenCentral()
+    }
+
+    ktlint {
+        version.set("0.49.1")
+        android.set(false)
+        outputToConsole.set(true)
+        coloredOutput.set(true)
+        reporters {
+            reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
+            reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+        }
     }
 }
 
